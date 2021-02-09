@@ -11,7 +11,8 @@ import io.vertx.core.spi.JsonFactory;
 import io.vertx.core.spi.json.JsonCodec;
 
 /**
- * Undertow
+ * Undertow explicitly excludes jackson-core so we need to make sure
+ * that Vert.x doesn't blow up when the native image is built
  */
 
 @TargetClass(className = "io.vertx.core.json.Json", onlyWith = JacksonMissingSelector.class)
