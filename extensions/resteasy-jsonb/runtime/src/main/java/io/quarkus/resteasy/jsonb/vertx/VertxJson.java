@@ -31,6 +31,8 @@ public class VertxJson {
         // avoid direct instantiation
     }
 
+    private final static Base64.Encoder BASE64_ENCODER = Base64.getUrlEncoder().withoutPadding();
+
     public static void copy(JsonObject object, javax.json.JsonObject origin) {
         origin.keySet().forEach(key -> {
             JsonValue value = origin.get(key);
@@ -120,7 +122,7 @@ public class VertxJson {
             Map<String, Object> map = new HashMap<>();
             for (Map.Entry<String, Object> entry : json.getMap().entrySet()) {
                 if (entry.getValue() instanceof byte[]) {
-                    map.put(entry.getKey(), Base64.getEncoder().encodeToString((byte[]) entry.getValue()));
+                    map.put(entry.getKey(), BASE64_ENCODER.encodeToString((byte[]) entry.getValue()));
                 } else {
                     map.put(entry.getKey(), entry.getValue());
                 }
@@ -146,7 +148,7 @@ public class VertxJson {
             List<Object> copy = new ArrayList<>();
             for (Object o : list) {
                 if (o instanceof byte[]) {
-                    copy.add(Base64.getEncoder().encodeToString((byte[]) o));
+                    copy.add(BASE64_ENCODER.encodeToString((byte[]) o));
                 } else {
                     copy.add(o);
                 }
